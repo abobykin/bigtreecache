@@ -1,0 +1,67 @@
+// app global css in SCSS form
+body {
+  min-width: 980px;
+}
+
+.main-card {
+  width: 60vw;
+  min-width: 800px;
+  height: 70vh;
+  min-height: 400px;
+  position: relative;
+  padding-bottom: 50px;
+
+  > .q-card__section {
+    height: 100%;
+
+    .row {
+      height: 100%;
+
+      > div {
+        height: 100%;
+      }
+    }
+  }
+}
+
+.q-card:not(.main-card) {
+  height: 100%;
+  overflow: auto;
+}
+
+.q-tree__node--selected {
+  background-color: rgba(158, 158, 158, 0.15);
+  * {
+    color: black;
+  }
+}
+.q-tree__node--disabled {
+  .q-tree__node-header-content {
+    span.text {
+      text-decoration: line-through;
+      text-decoration-color: rgba(145, 0, 0, 0.75);
+    }
+  }
+}
+
+.q-tree__node-header-content {
+  .q-icon {
+    font-size: 16px;
+    margin-left: 4px;
+  }
+}
+
+.q-field__native,
+.q-field__prefix,
+.q-field__suffix,
+.q-field__input {
+  line-height: 12px;
+}
+
+.controls-block {
+  padding: 20px 0 0;
+}
+
+.q-card--dark.q-dark {
+  background-color: rgba($color: #1b1c29, $alpha: 1);
+}
