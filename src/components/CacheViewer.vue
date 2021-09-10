@@ -7,6 +7,7 @@
         node-key="key"
         default-expand-all
         v-model:selected="selected"
+        v-model:expanded="expanded"
         :duration="250"
         @click="nodeSelected"
         ><template v-slot:default-header="item">
@@ -44,6 +45,7 @@ export default {
   props: {
     chooseNode: Function,
     dataObject: Array,
+    cacheTree: Object,
     onInputSave: Function,
     selectedCacheNode: String,
   },
@@ -51,9 +53,11 @@ export default {
   setup(props) {
     const selected = ref(null)
     const data = ref(props.dataObject)
+    const ids = ref([])
     const qTree = ref(null)
 
     return {
+      expanded: ref(ids),
       selected,
       data,
       qTree,
@@ -84,6 +88,7 @@ export default {
     this.$nextTick(() => {
       this.$refs.qTree.expandAll()
     })
+    this.expanded = this.cacheTree.ids()
   },
 }
 </script>

@@ -8,6 +8,7 @@
               <CacheViewer
                 :chooseNode="chooseNode"
                 :dataObject="cacheDataObject"
+                :cacheTree="cacheTree"
                 :onInputSave="editNode"
                 :selectedCacheNode="selectedCacheNode"
               />
