@@ -339,17 +339,6 @@ export const Tree = function (node, label = 'Database') {
     parent.children.delete(node_id)
     return this
   }
-
-  this.ids = function () {
-    let ids = []
-    let callback = function (nodeMap) {
-      nodeMap.forEach((node) => {
-        ids.push(node.id)
-      })
-    }
-    this.traverse(callback)
-    return ids
-  }
 }
 
 /*

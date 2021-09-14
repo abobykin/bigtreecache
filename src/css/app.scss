@@ -65,3 +65,14 @@ body {
 .q-card--dark.q-dark {
   background-color: rgba($color: #1b1c29, $alpha: 1);
 }
+
+.q-tree__node-collapsible {
+  display: block !important;
+  .q-tree__arrow {
+    transform: rotate3d(0, 0, 1, 90deg);
+  }
+}
+
+.q-tree__arrow--rotate {
+  transform: rotate3d(0, 0, 1, 90deg);
+}
