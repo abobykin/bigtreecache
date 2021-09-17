@@ -145,6 +145,7 @@ export default defineComponent({
       const node = this.cacheTree.root()
       this.databaseTree.update(this.cacheTree)
       this.databaseDataObject = this.databaseTree.export()
+      this.cacheDataObject = this.cacheTree.export()
     },
 
     reset() {

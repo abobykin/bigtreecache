@@ -277,9 +277,11 @@ export const Tree = function (node, label = 'Database') {
   // Extend this tree with another specified (cache) tree
   this.update = function (cache_tree) {
     let database_tree = this
+
+    // Attach/update nodes in DB
     const tree_callback = function (nodeMap) {
-      // Skip root cache tree node
       const is_root = nodeMap.get(cache_tree.root().id)
+      // Work with non root cache tree nodes
       if (!is_root) {
         nodeMap.forEach((node) => {
           node = node.clone()
@@ -287,21 +289,43 @@ export const Tree = function (node, label = 'Database') {
           let has_node_self = database_tree.get(node.id)
           if (has_node_self) {
             has_node_self.label = node.label
-            has_node_self.disabled = node.disabled
+            // Disable node and children
+            if (node.disabled) {
+              database_tree.disable(node.id)
+            }
           } else {
             // Case 1: find node parent
-            let node_parent = database_tree.get(node.parent_id)
-            if (node_parent) {
-              node_parent.children.set(node.id, node)
+            let has_node_parent = database_tree.get(node.parent_id)
+            if (has_node_parent) {
+              has_node_parent.children.set(node.id, node)
+              // Impossible case?
+              if (has_node_parent.disabled) {
+                database_tree.disable(node.id)
+              }
             } else {
               // Case 2: root
               database_tree.root().children.set(node.id, node)
             }
           }
+          //}
         })
       }
     }
-    cache_tree.traverse(tree_callback, this.deepscan)
+    cache_tree.traverse(tree_callback)
+
+    // Sync disabled state in cache
+    const sync_callback = function (nodeMap) {
+      const is_root = nodeMap.get(cache_tree.root().id)
+      if (!is_root) {
+        nodeMap.forEach((node) => {
+          let node_from_db = database_tree.get(node.id)
+          if (node_from_db && node_from_db.disabled) {
+            cache_tree.disable(node.id)
+          }
+        })
+      }
+    }
+    cache_tree.traverse(sync_callback)
   }
 
   // Clone whole tree
